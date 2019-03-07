@@ -9,40 +9,35 @@ class Body extends Component {
       dishes: DISHES,
       selecteditemid: null
     };
-    this.handleOnDrop = this.handleOnDrop.bind(this);
   }
 
   handleonDragstart = (event, itemsid) => {
-    return this.setState({ selecteditemid: itemsid });
+    return this.setState({
+      selecteditemid: itemsid
+    });
   };
+
   handleDrageOver = (event, itemsid) => {
     return event.preventDefault(event);
   };
+
   handleOnDrop = (event, itemsid) => {
     let i = 0;
-
-    var self = this;
-
-    return (function() {
-      [
-        self.state.dishes[self.state.selecteditemid],
-        self.state.dishes[itemsid]
-      ] = [
-        self.state.dishes[itemsid],
-        self.state.dishes[self.state.selecteditemid]
-      ];
-
-      self.state.dishes.map(item => {
-        console.log([item]);
-        item.id = i;
-        i++;
-      });
-      self.forceUpdate();
-    })();
+    [DISHES[this.state.selecteditemid], DISHES[itemsid]] = [
+      DISHES[itemsid],
+      DISHES[this.state.selecteditemid]
+    ];
+    this.state.dishes.map(item => {
+      item.id = i;
+      i++;
+    });
+    this.setState({
+      dishes: DISHES
+    });
   };
 
   render() {
-    const items = this.state.dishes.map(items => {
+    const items = DISHES.map(items => {
       return (
         <div className="column">
           <div className="card">
